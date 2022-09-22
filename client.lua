@@ -1,3 +1,4 @@
+-- Original Script Owner: ssergioblancco
 local showCarhudState = "not";
 local showCar = true;
 CreateThread(function()
