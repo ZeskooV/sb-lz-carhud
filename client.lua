@@ -1,3 +1,5 @@
+local showCarhudState = "not";
+local showCar = true;
 CreateThread(function()
     local _s = 2000 -- variable para loops
     while true do
@@ -10,6 +12,7 @@ CreateThread(function()
                 fuel   = GetVehicleFuelLevel(GetVehiclePedIsIn(PlayerPedId(), false)); -- obtener gasolina
                 kmh    = (GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6); -- Obtener velocidad en kmh
                 gear   = GetVehicleCurrentGear(GetVehiclePedIsIn(PlayerPedId(), false)); -- Obtener Marcha
+                showIng = showCarhudState; -- Ocultar o mostrar el carhud cuando este en vehículo.
             })
         elseif not IsPedInAnyVehicle(PlayerPedId()) then -- pero si no hay un jugador en un vehiculo entonces...
             SendNUIMessage({ action = "outVeh"; }) -- mandar accion en js, hace que oculte el carhud
@@ -22,3 +25,13 @@ CreateThread(function()
         Wait(_s) -- loop cada 2 segundos
     end -- fin
 end) -- fin
+RegisterCommand("togglecarhud", function(source, args)
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
+        showCar = not showCar;
+        if (showCar) then
+            showCarhudState = "yes";
+        else
+            showCarhudState = "not";
+        end
+    end
+end)
